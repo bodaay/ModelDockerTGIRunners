@@ -38,4 +38,6 @@ if [ $(docker ps -aq -f name=$container_name) ]; then
 fi
 
 # Run Docker container in the background
-docker run -d --name $container_name --gpus all --shm-size $shm_size -p $port:80 -v $volume:/data ghcr.io/huggingface/text-generation-inference:latest --model-id $model_name --num-shard $num_shard
+docker run -d  --name $container_name --gpus all --shm-size $shm_size -p $port:80 -v /home/ubuntu/Storage/:/data -e QUANTIZE=gptq \
+                           -e GPTQ_BITS=4 -e GPTQ_GROUPSIZE=32 \
+         ghcr.io/huggingface/text-generation-inference:latest --model-id /data/timdettmers_guanaco-65b-merged/ --num-shard $num_shard

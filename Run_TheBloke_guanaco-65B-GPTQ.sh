@@ -39,4 +39,4 @@ fi
 
 # Run Docker container in the background
 docker run -d --name $container_name --gpus all --shm-size $shm_size -p $port:80 -v $volume:/data -e QUANTIZE=gptq -e GTPQ_BITS=4 -e GTPQ_GROUPSIZE=-1 \
-       ghcr.io/huggingface/text-generation-inference:0.9 --model-id 'TheBloke/guanaco-65B-GPTQ' --num-shard $num_shard 
+       ghcr.io/huggingface/text-generation-inference:latest --model-id 'TheBloke/guanaco-65B-GPTQ' --num-shard $num_shard 

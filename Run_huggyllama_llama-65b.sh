@@ -38,4 +38,4 @@ if [ $(docker ps -aq -f name=$container_name) ]; then
 fi
 
 # Run Docker container in the background
-docker run -d --name $container_name --gpus all --shm-size $shm_size -p $port:80 -v $volume:/data ghcr.io/huggingface/text-generation-inference:0.9 --model-id $model_name --num-shard $num_shard
+docker run -d --name $container_name --gpus all --shm-size $shm_size -p $port:80 -v $volume:/data ghcr.io/huggingface/text-generation-inference:latest --model-id $model_name --num-shard $num_shard

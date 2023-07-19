@@ -24,7 +24,7 @@ model_name=$(echo $script_name | awk -F "_" '{print $2 "/" $3}')
 
 # Define variables
 num_shard=`nvidia-smi -L | wc -l` # number of GPUs
-volume=$PWD/data # share a volume with the Docker container to avoid downloading weights every run
+volume=/home/ubuntu/Storage/ # share a volume with the Docker container to avoid downloading weights every run
 shm_size=1g
 start_port=8080
 # Find next available port starting from $start_port
@@ -38,4 +38,4 @@ if [ $(docker ps -aq -f name=$container_name) ]; then
 fi
 
 # Run Docker container in the background
-docker run -d --name $container_name --gpus all --shm-size $shm_size -p $port:80 -v $volume:/data ghcr.io/huggingface/text-generation-inference:latest --model-id $model_name --num-shard $num_shard
+docker run -d --name $container_name --gpus all --shm-size $shm_size -p $port:80 -v $volume:/data ghcr.io/huggingface/text-generation-inference:latest --model-id /data/meta-llama_Llama-2-13b-chat-hf/ --num-shard $num_shard

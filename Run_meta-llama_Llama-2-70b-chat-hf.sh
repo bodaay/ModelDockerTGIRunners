@@ -38,4 +38,6 @@ if [ $(docker ps -aq -f name=$container_name) ]; then
 fi
 
 # Run Docker container in the background
-docker run -d --name $container_name --gpus all --shm-size $shm_size -p $port:80 -v $volume:/data ghcr.io/huggingface/text-generation-inference:latest --model-id $model_name --num-shard $num_shard
+docker run --name $container_name --gpus all --shm-size $shm_size -p $port:80 -v /home/ubuntu/Storage/:/data -e QUANTIZE=gptq \
+                           -e GPTQ_BITS=4 -e GPTQ_GROUPSIZE=32 -e MAX_BATCH_PREFILL_TOKENS=2048 -e MAX_BATCH_TOTAL_TOKENS=4000 \
+         ghcr.io/huggingface/text-generation-inference:latest --model-id /data/meta-llama_Llama-2-70b-chat-hf/ --num-shard $num_shard
